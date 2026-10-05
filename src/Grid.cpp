@@ -20,12 +20,15 @@ Grid::Grid(int windowSize, int cellSize, double b1, double b2, double d1, double
         nextGridState[i] = new double[rowSize]();
     }
 
+    // setting all values to 0 to even though some will be changed later during seeding
+    // this simplifies the seeding process as it only focuses on values set > 0
     for (int x = 0; x < rowSize; x++){
         for (int y = 0; y < rowSize; y++){    
             grid[x][y] = 0;
         }
     }
     
+    // start seeding (first values set > 0)
     int centerX = rowSize / 2;
     int centerY = rowSize / 2;
     int seedRadius = rowSize/5;
@@ -95,6 +98,7 @@ double Grid::getOuterNeighbors(int x, int y){
     return sum/count;
 }
 
+// these 3 sigmoid functions are for the transition function, I have a rudementary understanding of the math, it was translated into c++ from Rafler's paper
 double Grid::sigmoid1(double x, double a, double alpha){
     double eulers = 2.71828182845904523536;
     return (1 / (1 + pow(eulers,(-(x-a)*4/alpha))));
@@ -123,6 +127,8 @@ double Grid::transitionFunction(int x, int y){
     return sigmoid2(n, threshold_low, threshold_high, alpha_m);
 }
 
+// creates and transitions to the next state using the transition function
+// two different loops because the next state needs the surrounding cells to stay the same
 void Grid::nextState(){
     for(int x = 0; x < this->rowSize; x++){
         for(int y = 0; y < this->rowSize; y++){    
