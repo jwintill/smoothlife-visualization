@@ -3,7 +3,8 @@ I've always been extremely fascinated by cellular automata ever since I first le
 
 **Link to Rafler's paper:** https://arxiv.org/pdf/1111.1567
 ## Visuals:
-![SmoothLife demo](docs/demo.gif)
+![SmoothLife demo 1](docs/demo1.gif)
+![SmoothLife demo 2](docs/demo2.gif)
 ## How It's Made:
 
 **Tech used:** C++, SDL2, CMake
