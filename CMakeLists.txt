@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(GameOfLife)
+project(SmoothLife)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -20,7 +20,7 @@ else()
     set(SDL2_LIBRARIES SDL2::SDL2)
 endif()
 
-add_executable(GameOfLife
+add_executable(SmoothLife
     src/main.cpp
     src/Grid.cpp
 )
@@ -29,4 +29,4 @@ if(WIN32)
     set(SDL2_LIBRARIES SDL2::SDL2main ${SDL2_LIBRARIES})
 endif()
 
-target_link_libraries(GameOfLife PRIVATE ${SDL2_LIBRARIES})
+target_link_libraries(SmoothLife PRIVATE ${SDL2_LIBRARIES})

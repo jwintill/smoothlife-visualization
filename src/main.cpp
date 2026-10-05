@@ -4,7 +4,7 @@
 
 /* to build and run:
     cmake --build build
-    ./build/GameOfLife
+    ./build/SmoothLife
 */
 const int WINDOW_SIZE = 800;
 const int CELL_SIZE = 4;
@@ -18,7 +18,7 @@ int main() {
 
     SDL_Init(SDL_INIT_VIDEO);
 
-    SDL_Window* window = SDL_CreateWindow("Game of Life",
+    SDL_Window* window = SDL_CreateWindow("Smooth Life Visualization",
                                           SDL_WINDOWPOS_CENTERED,
                                           SDL_WINDOWPOS_CENTERED,
                                           WINDOW_SIZE, WINDOW_SIZE,
