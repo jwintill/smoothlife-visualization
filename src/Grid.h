@@ -14,6 +14,9 @@ private:
     double b1, b2, d1, d2;
 
     bool inBounds(int x, int y);
+    void circleSeed(int centerX, int centerY, int seedRadius);
+    void squareSeed(int centerX, int centerY, int seedLength);
+    void triangleSeed(int centerX, int centerY, int seedLength);
     double getInnerNeighbors(int x, int y);
     double getOuterNeighbors(int x, int y);
     double sigmoid1(double x, double a, double alpha);

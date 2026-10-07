@@ -1,4 +1,6 @@
 #include <SDL.h>
+#include <cmath>
+#include <ctime>
 #include "Grid.h"
 
 const int INNERNEIGHBORHOOD = 7; // side length of neighborhood square (should be odd number)
@@ -29,19 +31,11 @@ Grid::Grid(int windowSize, int cellSize, double b1, double b2, double d1, double
     }
     
     // start seeding (first values set > 0)
-    int centerX = rowSize / 2;
-    int centerY = rowSize / 2;
-    int seedRadius = rowSize/5;
-
-    for(int i = -seedRadius; i <= seedRadius; i++){
-        int dy_limit = sqrt(seedRadius * seedRadius - i * i);
-        for(int j = -dy_limit; j <= dy_limit; j++){
-            if(inBounds(centerX + i, centerY + j)) {
-                grid[centerX + i][centerY + j] = static_cast <double> (rand()) / RAND_MAX;
-            }
-        }
-    }
-    
+    srand(time(nullptr));
+    circleSeed(rowSize/4, rowSize/4, rowSize/5);
+    triangleSeed(3*rowSize/4, rowSize/4, rowSize/2);
+    triangleSeed(rowSize/4, 3*rowSize/4, rowSize/2);
+    circleSeed(3*rowSize/4, 3*rowSize/4, rowSize/5);
 }
 
 Grid::~Grid() {
@@ -55,6 +49,36 @@ Grid::~Grid() {
 
 bool Grid::inBounds(int x, int y) {
     return (x >= 0 && x < rowSize) && (y >= 0 && y < rowSize);
+}
+
+void Grid::circleSeed(int centerX, int centerY, int seedRadius) {
+    for(int i = -seedRadius; i <= seedRadius; i++){
+        int dy_limit = sqrt(seedRadius * seedRadius - i * i);
+        for(int j = -dy_limit; j <= dy_limit; j++){
+            if(inBounds(centerX + i, centerY + j)) {
+                grid[centerX + i][centerY + j] = static_cast<double>(rand()) / RAND_MAX;
+            }
+        }
+    }
+}
+
+void Grid::squareSeed(int centerX, int centerY, int seedLength) {
+    for(int i = -seedLength/2; i <=seedLength/2; i++){
+        for(int j = -seedLength/2; j <=seedLength/2; j++){
+            if(inBounds(centerX + i, centerY + j))
+                grid[centerX + i][centerY + j] = static_cast<double>(rand()) / RAND_MAX;
+        }
+    }
+}
+
+void Grid::triangleSeed(int centerX, int centerY, int seedLength) {
+    for(int i = -seedLength/2; i <=seedLength/2; i++){
+        int triangleWidth = (seedLength-(seedLength/2+i))/2;
+        for(int j = -triangleWidth/2; j <=triangleWidth/2; j++){
+            if(inBounds(centerX + i, centerY + j))
+                grid[centerX + i][centerY + j] = static_cast<double>(rand()) / RAND_MAX;
+        }
+    }
 }
 
 double Grid::getInnerNeighbors(int x, int y){
